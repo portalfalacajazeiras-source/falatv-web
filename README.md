@@ -92,3 +92,4 @@ npm run start      # Servidor de produção local
 npm run lint       # ESLint
 npm run type-check # TypeScript check
 ```
+
