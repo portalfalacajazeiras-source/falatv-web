@@ -1,0 +1,19 @@
+{
+  "name": "FalaTV — Fala Cajazeiras",
+  "short_name": "FalaTV",
+  "description": "Portal de vídeos do canal Fala Cajazeiras",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0D0D0D",
+  "theme_color": "#0D0D0D",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Ao Vivo", "url": "/ao-vivo", "description": "Transmissão ao vivo" },
+    { "name": "Shorts", "url": "/shorts", "description": "Feed de Shorts" },
+    { "name": "Buscar", "url": "/busca", "description": "Buscar vídeos" }
+  ]
+}

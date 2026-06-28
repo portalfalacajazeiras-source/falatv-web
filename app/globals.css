@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FalaTV — Global Styles
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --primary:         #E63946;
+  --primary-dark:    #C1121F;
+  --bg:              #0D0D0D;
+  --surface:         #1A1A1A;
+  --elevated:        #242424;
+  --overlay:         #2D2D2D;
+  --text:            #FFFFFF;
+  --text-secondary:  #9CA3AF;
+  --text-muted:      #6B7280;
+  --border:          #2D2D2D;
+  --border-subtle:   #1F1F1F;
+  --nav-height:      64px;
+  --safe-bottom:     env(safe-area-inset-bottom, 0px);
+}
+
+/* Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: contain;
+  /* Espaço para bottom nav */
+  padding-bottom: calc(var(--nav-height) + var(--safe-bottom));
+}
+
+/* Scrollbar customizada */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--overlay);
+  border-radius: 2px;
+}
+
+/* Seleção de texto */
+::selection {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Imagens */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Utilitários customizados
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@layer utilities {
+
+  /* Esconde scrollbar mas mantém funcionalidade */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Snap scroll para Shorts */
+  .snap-y-mandatory {
+    scroll-snap-type: y mandatory;
+  }
+  .snap-start {
+    scroll-snap-align: start;
+  }
+
+  /* Gradiente de fade inferior para thumbnails */
+  .thumb-overlay {
+    background: linear-gradient(
+      to bottom,
+      transparent 40%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+  }
+
+  /* Aspect ratio 16:9 */
+  .aspect-video-thumb {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Aspect ratio 9:16 (Shorts) */
+  .aspect-shorts {
+    aspect-ratio: 9 / 16;
+  }
+
+  /* Container mobile-first */
+  .container-mobile {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* Linha de destaque (vermelho) */
+  .accent-line {
+    border-left: 3px solid var(--primary);
+    padding-left: 10px;
+  }
+
+  /* Badge de LIVE pulsando */
+  .badge-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #FF0000;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .badge-live::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    animation: pulse-live 1.5s ease-in-out infinite;
+  }
+
+  /* Linha clamp */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@layer components {
+
+  /* Card de vídeo base */
+  .video-card {
+    @apply bg-bg-surface rounded-xl overflow-hidden transition-transform duration-200 active:scale-95;
+  }
+
+  /* Botão primário */
+  .btn-primary {
+    @apply bg-primary text-white font-semibold px-6 py-3 rounded-xl
+           active:bg-primary-dark transition-colors duration-150;
+  }
+
+  /* Badge de tipo */
+  .type-badge {
+    @apply text-2xs font-bold uppercase tracking-widest px-2 py-0.5 rounded;
+  }
+
+  /* Skeleton loader */
+  .skeleton {
+    @apply bg-bg-elevated animate-pulse rounded;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Animações
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@keyframes pulse-live {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+
+/* YouTube Player iframe */
+.yt-player-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.yt-player-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
