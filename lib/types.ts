@@ -1,8 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// FalaTV — TypeScript Types
-// Espelha exatamente o formato retornado pela REST API WordPress.
-// ─────────────────────────────────────────────────────────────────────────────
-
 export type VideoType = 'horizontal' | 'short' | 'live' | 'premiere'
 export type VideoStatus = 'published' | 'live' | 'upcoming' | 'unlisted'
 
@@ -36,19 +31,18 @@ export interface VideoJsonLd {
 }
 
 export interface Video {
-  id: string                // YouTube Video ID
+  id: string
   title: string
   type: VideoType
   status: VideoStatus
   thumbnail: string
-  duration: number          // segundos
-  duration_fmt: string      // '5:30' ou '1:23:45'
+  duration: number
+  duration_fmt: string
   views: VideoViews
   likes: number
-  published_at: string      // ISO 8601
+  published_at: string
   featured: boolean
   category: string
-  // Campos extras — apenas em GET /videos/{id}
   description?: string
   tags?: string[]
   comments?: number
@@ -58,7 +52,7 @@ export interface Video {
 }
 
 export interface Playlist {
-  id: string                // YouTube Playlist ID
+  id: string
   title: string
   description: string
   thumbnail: string
@@ -69,13 +63,19 @@ export interface PlaylistVideo extends Video {
   position: number
 }
 
+export interface LiveVideo {
+  id: string
+  title: string
+  thumbnail: string
+  status: VideoStatus
+  live_url: string
+  started_at: string | null
+  scheduled_at: string | null
+}
+
 export interface LiveStatus {
   type: 'live' | 'premiere' | null
-  video: Pick<Video, 'id' | 'title' | 'thumbnail' | 'status' | 'live_url'> & {
-    live_url: string
-    started_at: string | null
-    scheduled_at: string | null
-  } | null
+  video: LiveVideo | null
   scheduled_at: string | null
 }
 
@@ -97,10 +97,6 @@ export interface SiteStatus {
   timestamp: string
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// API Response envelopes
-// ─────────────────────────────────────────────────────────────────────────────
-
 export interface ApiMeta {
   total: number
   per_page: number
@@ -117,10 +113,6 @@ export interface ApiSingleResponse<T> {
   data: T
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Parâmetros de busca de vídeos
-// ─────────────────────────────────────────────────────────────────────────────
-
 export interface VideoFilters {
   type?: VideoType
   status?: VideoStatus | 'all'
@@ -131,10 +123,6 @@ export interface VideoFilters {
   per_page?: number
   order?: 'asc' | 'desc'
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Evento de analytics
-// ─────────────────────────────────────────────────────────────────────────────
 
 export type AnalyticsEventType = 'play' | 'pause' | 'complete' | 'impression' | 'share' | 'seek'
 
