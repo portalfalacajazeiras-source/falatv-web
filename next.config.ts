@@ -1,7 +1,5 @@
-import type { NextConfig } from 'next'
-
-const nextConfig: NextConfig = {
-  // Otimização de imagens
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -19,8 +17,6 @@ const nextConfig: NextConfig = {
     deviceSizes: [390, 768, 1280],
     minimumCacheTTL: 3600,
   },
-
-  // Headers de segurança e performance
   async headers() {
     return [
       {
@@ -32,7 +28,6 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Cache agressivo para assets estáticos
         source: '/_next/static/(.*)',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
@@ -40,17 +35,8 @@ const nextConfig: NextConfig = {
       },
     ]
   },
-
-  // Compressão e otimizações
   compress: true,
   poweredByHeader: false,
-
-  // Variáveis de ambiente expostas ao cliente
-  env: {
-    NEXT_PUBLIC_WP_API_URL: process.env.NEXT_PUBLIC_WP_API_URL ?? '',
-    NEXT_PUBLIC_SITE_NAME: process.env.NEXT_PUBLIC_SITE_NAME ?? 'FalaTV',
-    NEXT_PUBLIC_CHANNEL_NAME: process.env.NEXT_PUBLIC_CHANNEL_NAME ?? 'Fala Cajazeiras',
-  },
 }
 
-export default nextConfig
+module.exports = nextConfig
